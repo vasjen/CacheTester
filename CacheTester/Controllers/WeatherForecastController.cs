@@ -38,7 +38,8 @@ public class WeatherForecastController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetItemByIndexFromDb(int index)
     {
-        var items = _db.HashValues($"doc:{index}");
+        RedisValue[] items = _db.HashValues($"doc:{index}");
+        _logger.LogInformation($"We got data from with index: {index}");
         return Ok(items.Select(item => item.ToString()));
     }
 }
