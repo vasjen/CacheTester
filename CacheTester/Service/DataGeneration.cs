@@ -14,7 +14,7 @@ public class DataGeneration : IDataGeneration
             .RuleFor(u => u.Kladr, f => f.Random.UInt().ToString())
             .RuleFor(u => u.Okato, f => f.Random.Int().ToString())
             .RuleFor(u => u.Oktmo, f => f.Random.Int().ToString())
-            .Generate(10000)
+            .Generate(100000)
             .ToArray();
 
         return data;
