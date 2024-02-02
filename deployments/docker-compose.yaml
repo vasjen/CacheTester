@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: ../CacheTester
+      dockerfile: ./dockerfile
+    ports:
+      - 7000:80
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - mynet
+    depends_on: 
+        - redis
+    container_name: cachetest
+  
+  redis:
+    image: "redis/redis-stack-server:latest"
+    ports:
+      - 6379:6379
+    networks:
+      - mynet
+    container_name: redis
+
+
+ 
+networks:
+  mynet:
+  
+
