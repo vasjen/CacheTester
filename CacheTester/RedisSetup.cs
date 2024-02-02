@@ -35,8 +35,7 @@ public class RedisSetup : IRedisSetup, IHostedService
         SearchCommands ft = db.FT();
         JsonCommands json = db.JSON();
         
-        ft.Create("myIndex", new FTCreateParams().On(IndexDataType.HASH)
-                .Prefix("doc:"),
+        ft.Create("myIndex", new FTCreateParams().On(IndexDataType.HASH),
             new Schema()
                 .AddTextField("fias", 5.0)
                 .AddTextField("kladr")
@@ -49,14 +48,16 @@ public class RedisSetup : IRedisSetup, IHostedService
         int index = 0;
         foreach (OkatoResponse item in data)
         {
-            db.HashSet($"doc:{++index}", new[]
+            ++index;
+            string address = initial.GetRandomAddress();
+            db.HashSet($"{address}:{index}", new[]
             {
                 new HashEntry("fias", item.Fias.ToString()),
                 new HashEntry("kladr", item.Kladr),
                 new HashEntry("okato", item.Okato),
                 new HashEntry("oktmo", item.Oktmo)
             });
-             _logger.LogInformation($"doc:{index} was added to db with data: {item.Fias}, {item.Kladr}, {item.Okato}, {item.Oktmo}");
+             _logger.LogInformation($"{address}:{index} was added to db with data: {item.Fias}, {item.Kladr}, {item.Okato}, {item.Oktmo}");
         }
         _logger.LogInformation("Data seeding to Redis completed.");
         return db;

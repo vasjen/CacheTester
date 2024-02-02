@@ -19,9 +19,15 @@ public class DataGeneration : IDataGeneration
 
         return data;
     }
+    
+    public string GetRandomAddress()
+    {
+       return new Faker().Address.FullAddress();
+    }
 }
 
 public interface IDataGeneration
 {
     OkatoResponse[] GetData(int seed);
+    string GetRandomAddress();
 }
