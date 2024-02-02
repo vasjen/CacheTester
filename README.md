@@ -1,1 +1,6 @@
-Заруск через docker-compose -f ./deployments/docker-compose.yaml up -d 
+Запуск через
+```yaml
+docker-compose -f ./deployments/docker-compose.yaml up -d
+```
+
+
